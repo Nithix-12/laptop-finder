@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Laptop Finder Guide</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Define a professional dark theme */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A; /* Dark Slate Background */
+            color: #E2E8F0; /* Light text */
+            transition: background-color 0.5s ease;
+        }
+        /* Custom shadows and card base */
+        .app-card {
+            background-color: #1E293B; /* Slightly lighter card base */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Stronger shadow for depth */
+        }
+        /* Custom hover effect for selection buttons */
+        .selection-button {
+            transition: all 0.3s ease;
+        }
+        .selection-button:hover {
+            transform: scale(1.05);
+            background-color: #312E81; /* Darker indigo on hover */
+            border-color: #6366F1;
+        }
+        /* Gradient for main title */
+        .gradient-text {
+            background-image: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        /* Custom styling for the pros/cons lists (like the slides) */
+        .custom-ul-green li {
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .custom-ul-green li::before {
+            content: "\f058"; /* Check circle */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: #10B981; /* Emerald green */
+        }
+        .custom-ul-red li {
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .custom-ul-red li::before {
+            content: "\f057"; /* Times circle */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: #EF4444; /* Red */
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div id="app-container" class="w-full max-w-5xl app-card rounded-xl p-6 md:p-12">
+        <!-- Content will be injected here by JavaScript -->
+    </div>
+
+    <script>
+        // --- 1. APPLICATION DATA ---
+        const LAPTOP_DATA = {
+            'gaming': {
+                title: 'The Ultimate Gaming Rig',
+                accentColor: 'text-red-400',
+                borderColor: 'border-red-500',
+                icon: 'fa-gamepad',
+                pros: [
+                    'Dedicated GPU for high frame rates and graphics performance.',
+                    'High-refresh-rate displays (144Hz+) are standard.',
+                    'Advanced cooling systems manage heat effectively.',
+                ],
+                cons: [
+                    'High cost and often heavy/bulky design.',
+                    'Significantly reduced battery life when under load.',
+                    'Loud fans, which can be distracting.',
+                ],
+                recommendations: {
+                    ram: '16GB or 32GB DDR5: 16GB is the minimum. 32GB ensures future-proofing, streaming, and better multitasking.',
+                    storage: '1TB NVMe SSD: 512GB is usable but 1TB is highly recommended for storing modern, large game files.',
+                    gpu: 'Dedicated GPU (NVIDIA GeForce RTX 4070+ or AMD Radeon RX 7700 XT+): Non-negotiable for serious gaming.',
+                    display: '15-17 inch, 1080p (FHD) @ 144Hz+ or 1440p (QHD) @ 120Hz+.',
+                },
+                tieredRecommendations: [
+                    // Prices updated to approximate INR (₹) values
+                    { tier: "Budget Warrior", name: "Lenovo LOQ 15 (RTX 4050)", price: "~₹75,000", description: "Solid entry into 1080p gaming with good thermal design.", type: "budget" },
+                    { tier: "Mid-Range Champion", name: "ASUS ROG Zephyrus G14 (RTX 4070)", price: "~₹1,35,000", description: "Portable power, excellent QHD performance, and premium build quality.", type: "mid-range" },
+                    { tier: "Performance Beast", name: "Razer Blade 16 or MSI Titan 18 HX", price: "~₹2,50,000+", description: "Desktop-class power (RTX 4080/4090) for 4K and competitive high-refresh rate gaming.", type: "high-end" }
+                ]
+            },
+            'productivity': {
+                title: 'The Efficient Workhorse',
+                accentColor: 'text-cyan-400',
+                borderColor: 'border-cyan-500',
+                icon: 'fa-briefcase',
+                pros: [
+                    'Exceptional battery life (often 10-18+ hours).',
+                    'Ultra-thin, lightweight, and supreme portability.',
+                    'Fanless or quiet operation for focused work environments.',
+                ],
+                cons: [
+                    'Limited graphics performance (uses integrated GPU).',
+                    'RAM is often soldered and cannot be upgraded later.',
+                    'Less port variety on the thinnest models.',
+                ],
+                recommendations: {
+                    ram: '16GB LPDDR5X: The modern standard for smooth multitasking, especially with multiple browser tabs. 8GB can be a bottleneck.',
+                    storage: '512GB NVMe SSD: Fast boot times and application loading. Sufficient for documents, but heavy media users might need 1TB.',
+                    gpu: 'Integrated Graphics (Apple M-series or Intel Arc/Iris Xe): Dedicated GPU is generally not necessary, maximizing battery life and efficiency.',
+                    display: '13-14 inch, 1080p (FHD) or 1440p (QHD+). High brightness (400+ nits) for outdoor use.',
+                },
+                tieredRecommendations: [
+                    // Prices updated to approximate INR (₹) values
+                    { tier: "Budget Essential", name: "Acer Swift Go 14 or Lenovo IdeaPad", price: "~₹55,000", description: "Great everyday computing with a decent screen and modern CPU.", type: "budget" },
+                    { tier: "Premium Portable", name: "MacBook Air 13 (M4) or Dell XPS 13", price: "~₹95,000", description: "The best combination of efficiency, battery life, and premium design.", type: "mid-range" },
+                    { tier: "Executive Power", name: "Lenovo ThinkPad X1 Carbon or HP Spectre x360", price: "~₹1,60,000", description: "Best-in-class keyboards, advanced security, and high-end materials for professionals.", type: "high-end" }
+                ]
+            },
+            'editing': {
+                title: 'The Creative Powerhouse',
+                accentColor: 'text-fuchsia-400',
+                borderColor: 'border-fuchsia-500',
+                icon: 'fa-pen-nib',
+                pros: [
+                    'High core-count processors (CPU/GPU) for rapid rendering and encoding.',
+                    'Color-accurate displays (100% DCI-P3) are essential for design work.',
+                    'Usually includes useful I/O like SD card slots and Thunderbolt 4/5.',
+                ],
+                cons: [
+                    'Very expensive due to high-end component requirements.',
+                    'Requires robust cooling, which can make them heavy.',
+                    'Software compatibility issues are occasionally present on non-Windows platforms.',
+                ],
+                recommendations: {
+                    ram: '32GB or 64GB DDR5: 32GB is the minimum for 4K video editing. 64GB is recommended for 6K/8K or heavy 3D/VFX work.',
+                    storage: '1TB NVMe SSD minimum (preferably 2TB): Project files are massive. Fast internal storage plus external Thunderbolt/USB-C drives are critical.',
+                    gpu: 'Dedicated GPU (NVIDIA Studio/RTX 4070+ or M-series Pro/Max): Required for accelerating effects, rendering, and timeline scrubbing.',
+                    display: '15-16 inch, QHD or 4K, OLED/Mini-LED, with verified 100% DCI-P3 coverage.',
+                },
+                tieredRecommendations: [
+                    // Prices updated to approximate INR (₹) values
+                    { tier: "Budget Starter", name: "ASUS TUF Gaming A16", price: "~₹85,000", description: "Affordable access to a powerful Ryzen CPU and GPU for entry-level 4K or heavy 1080p projects.", type: "budget" },
+                    { tier: "Prosumer Choice", name: "ASUS ProArt P16 or Dell XPS 16", price: "~₹1,60,000", description: "Balanced power and a phenomenal, color-calibrated OLED screen for professional work.", type: "mid-range" },
+                    { tier: "Unconstrained Power", name: "MacBook Pro 16 (M4 Max) or MSI Creator Z16", price: "~₹3,00,000+", description: "Maximum unified memory and processing cores for cinematic-level, multi-stream editing.", type: "high-end" }
+                ]
+            }
+        };
+
+        const appContainer = document.getElementById('app-container');
+
+        // --- 2. RENDER FUNCTIONS ---
+
+        /**
+         * Renders the initial screen where the user selects the laptop type.
+         */
+        function renderSelectionScreen() {
+            appContainer.innerHTML = `
+                <h1 class="text-5xl md:text-6xl font-extrabold text-center mb-6">
+                    <span class="gradient-text">The Laptop Finder</span>
+                </h1>
+                <p class="text-center text-gray-400 mb-12 max-w-xl mx-auto text-xl">
+                    Select your primary use case to find the optimal hardware recommendations and models.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    ${Object.keys(LAPTOP_DATA).map(type => {
+                        const data = LAPTOP_DATA[type];
+                        const iconColor = data.accentColor;
+                        return `
+                            <button onclick="showDetails('${type}')"
+                                class="selection-button p-8 flex flex-col items-center text-center rounded-xl border border-gray-700 transition duration-300 shadow-xl bg-gray-700/30 hover:shadow-2xl hover:shadow-indigo-500/30">
+                                
+                                <div class="text-6xl mb-4 ${iconColor} transition duration-300">
+                                    <i class="fa-solid ${data.icon}"></i>
+                                </div>
+
+                                <h2 class="text-2xl font-bold capitalize text-white mb-2">
+                                    ${type} Laptop
+                                </h2>
+                                <p class="text-md text-gray-400 mt-2">
+                                    ${getSubtitle(type)}
+                                </p>
+                            </button>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        /**
+         * Renders the detailed information screen for the selected laptop type.
+         */
+        function showDetails(type) {
+            const data = LAPTOP_DATA[type];
+            if (!data) return; 
+
+            const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1);
+            const accentTextClass = data.accentColor;
+            const accentBorderClass = data.borderColor;
+
+            appContainer.innerHTML = `
+                <button onclick="renderSelectionScreen()" class="mb-8 flex items-center text-indigo-400 hover:text-indigo-300 transition duration-150 font-semibold">
+                    <i class="fa-solid fa-arrow-left mr-3"></i>
+                    Back to Categories
+                </button>
+
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2">${capitalizedType} Laptop</h1>
+                <h2 class="text-2xl font-bold ${accentTextClass} mb-10">${data.title}</h2>
+
+                
+                <!-- Pros, Cons, and Display Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+                    
+                    <!-- Pros Card (Green Accent) -->
+                    <div class="p-6 bg-gray-700 rounded-xl border-t-4 border-green-500 shadow-lg">
+                        <h3 class="font-bold text-xl text-green-400 mb-3 flex items-center">
+                            <i class="fa-solid fa-circle-check mr-2"></i> Pros
+                        </h3>
+                        <ul class="space-y-2 text-gray-300 text-base custom-ul-green">
+                            ${data.pros.map(p => `<li>${p}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <!-- Cons Card (Red Accent) -->
+                    <div class="p-6 bg-gray-700 rounded-xl border-t-4 border-red-500 shadow-lg">
+                        <h3 class="font-bold text-xl text-red-400 mb-3 flex items-center">
+                            <i class="fa-solid fa-circle-xmark mr-2"></i> Cons
+                        </h3>
+                        <ul class="space-y-2 text-gray-300 text-base custom-ul-red">
+                            ${data.cons.map(c => `<li>${c}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <!-- Display Card (Blue/Indigo Accent) -->
+                    <div class="p-6 bg-gray-700 rounded-xl border-t-4 border-indigo-500 shadow-lg">
+                        <h3 class="font-bold text-xl text-indigo-400 mb-3 flex items-center">
+                            <i class="fa-solid fa-desktop mr-2"></i> Display Specs
+                        </h3>
+                        <p class="text-gray-300 text-base">${data.recommendations.display}</p>
+                    </div>
+
+                </div>
+
+                <!-- Core Hardware Recommendations -->
+                <div class="mt-8">
+                    <h3 class="text-3xl font-bold text-white mb-6 border-b border-gray-700 pb-3">Core Hardware Requirements</h3>
+                    
+                    ${renderRecommendationItem('RAM (Memory)', data.recommendations.ram, 'fa-memory', 'bg-purple-600/30 text-purple-400')}
+                    ${renderRecommendationItem('Storage (SSD)', data.recommendations.storage, 'fa-hard-drive', 'bg-yellow-600/30 text-yellow-400')}
+                    ${renderRecommendationItem('GPU (Graphics)', data.recommendations.gpu, 'fa-microchip', 'bg-red-600/30 text-red-400')}
+                </div>
+
+                <!-- Tiered Product Recommendations -->
+                <div class="mt-12">
+                    <h3 class="text-3xl font-bold text-white mb-6 border-b border-gray-700 pb-3">Top Laptop Models by Tier</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        ${data.tieredRecommendations.map(rec => renderTieredRecommendationCard(rec)).join('')}
+                    </div>
+                    <p class="text-center text-sm text-gray-500 mt-8 italic">
+                        *The links above lead to Amazon search results for the specified model. Verify current specs and pricing before purchase.
+                    </p>
+                </div>
+            `;
+        }
+
+        /**
+         * Generates the HTML for a single core recommendation item.
+         */
+        function renderRecommendationItem(title, description, iconClass, colorClasses) {
+            return `
+                <div class="flex items-start p-5 mb-4 rounded-xl bg-gray-800 border border-gray-700 shadow-md">
+                    <div class="p-3 rounded-full ${colorClasses} mr-4 flex-shrink-0">
+                        <i class="fa-solid ${iconClass} text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-lg text-white">${title}</h4>
+                        <p class="text-gray-400 mt-1 text-base">${description}</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        /**
+         * Generates the HTML for a single tiered product recommendation card.
+         */
+        function renderTieredRecommendationCard(rec) {
+            const amazonSearchQuery = encodeURIComponent(rec.name);
+            const amazonUrl = `https://www.amazon.in/s?k=${amazonSearchQuery}`; // Updated to Amazon India (.in)
+
+            let headerColor = '';
+            let buttonColor = 'bg-indigo-600 hover:bg-indigo-700';
+
+            switch (rec.type) {
+                case 'budget': headerColor = 'text-green-400'; break;
+                case 'mid-range': headerColor = 'text-cyan-400'; break;
+                case 'high-end': headerColor = 'text-red-400'; break;
+                default: headerColor = 'text-gray-400';
+            }
+
+            return `
+                <div class="p-5 bg-gray-800 rounded-xl border-t-8 border-indigo-500/50 shadow-xl flex flex-col transition duration-300 hover:shadow-2xl hover:shadow-indigo-500/40">
+                    <h4 class="text-xl font-bold ${headerColor} mb-1">${rec.tier}</h4>
+                    <p class="text-2xl font-extrabold text-white mb-2">${rec.name}</p>
+                    <p class="text-sm text-gray-400 flex-grow mb-4">${rec.description}</p>
+                    <div class="flex items-center justify-between mt-auto mb-4">
+                        <span class="text-xl font-bold text-yellow-400">${rec.price}</span>
+                    </div>
+                    <a href="${amazonUrl}" target="_blank" rel="noopener noreferrer" 
+                       class="mt-auto inline-flex items-center justify-center px-4 py-2 ${buttonColor} text-white font-medium text-base rounded-lg transition duration-150 transform hover:scale-[1.02] shadow-lg">
+                        Find on Amazon.in 
+                        <i class="fa-solid fa-magnifying-glass ml-2"></i>
+                    </a>
+                </div>
+            `;
+        }
+
+
+        // --- 3. UTILITY FUNCTIONS ---
+        
+        function getSubtitle(type) {
+            switch(type) {
+                case 'gaming': return 'Raw performance and high graphical fidelity.';
+                case 'productivity': return 'Efficiency, battery life, and superior portability.';
+                case 'editing': return 'Color accuracy, high RAM, and fast rendering speeds.';
+                default: return 'What are your main needs?';
+            }
+        }
+
+
+        // --- 4. INITIALIZATION ---
+
+        // Start the application by rendering the selection screen
+        window.onload = renderSelectionScreen; 
+
+    </script>
+</body>
+</html>
