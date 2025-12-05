@@ -161,7 +161,7 @@
 
         const appContainer = document.getElementById('app-container');
 
-        // --- 2. RENDER FUNCTIONS ---
+        
 
         /**
          * Renders the initial screen where the user selects the laptop type.
@@ -328,7 +328,7 @@
         }
 
 
-        // --- 3. UTILITY FUNCTIONS ---
+       
         
         function getSubtitle(type) {
             switch(type) {
@@ -340,11 +340,11 @@
         }
 
 
-        // --- 4. INITIALIZATION ---
 
         // Start the application by rendering the selection screen
         window.onload = renderSelectionScreen; 
 
     </script>
 </body>
+
 </html>
